@@ -19,10 +19,9 @@ GitHub remote url open command.
      go get -u github.com/typester/gh-open
    #+END_SRC
 
-   Others:
-   #+BEGIN_SRC text
-   Binary release coming soon
-   #+END_SRC
+   For others:
+
+   [[https://github.com/typester/gh-open/releases][Downloads release binary and put it in your PATH]]
 
 ** Author
    Daisuke Murase (typester)
