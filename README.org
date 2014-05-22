@@ -1,0 +1,36 @@
+* gh-open
+
+GitHub remote url open command.
+
+** Usage
+
+   #+BEGIN_SRC sh
+     gh-open ~/path/to/repo
+   #+END_SRC
+
+** Requirements
+
+   - git command (in PATH)
+
+** Install
+
+   For Go User:
+   #+BEGIN_SRC sh
+     go get -u github.com/typester/gh-open
+   #+END_SRC
+
+   Others:
+   #+BEGIN_SRC text
+   Binary release coming soon
+   #+END_SRC
+
+** Author
+   Daisuke Murase (typester)
+
+** License
+   MIT
+
+
+
+
+
