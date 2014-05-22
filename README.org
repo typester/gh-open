@@ -2,6 +2,10 @@
 
 GitHub remote url open command.
 
+#+BEGIN_HTML
+<a href="https://app.wercker.com/project/bykey/d299966c240491214aefaee0ba3f5fab"><img alt="Wercker status" src="https://app.wercker.com/status/d299966c240491214aefaee0ba3f5fab/s"></a>
+#+END_HTML
+
 ** Usage
 
    #+BEGIN_SRC sh
