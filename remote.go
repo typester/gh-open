@@ -87,17 +87,17 @@ func MangleURL(url string) (string, error) {
 
 func CreateURL(host, user, repo string) (string, error) {
     gheHost := configGet("gh-open.ghe-host")
-    gheProtcol := configGet("gh-open.ghe-protocol")
+    gheProtocol := configGet("gh-open.ghe-protocol")
 
     if host != "github.com" && host != gheHost {
         return "", fmt.Errorf("invalid github host: %s", host)
     }
 
     if host == gheHost {
-        if "" == gheProtcol {
-            gheProtcol = "https"
+        if "" == gheProtocol {
+            gheProtocol = "https"
         }
-        return fmt.Sprintf("%s://%s/%s/%s", gheProtcol, host, user, repo), nil
+        return fmt.Sprintf("%s://%s/%s/%s", gheProtocol, host, user, repo), nil
     } else {
         return fmt.Sprintf("https://%s/%s/%s", host, user, repo), nil
     }
