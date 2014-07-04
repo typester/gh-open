@@ -161,5 +161,5 @@ func TestCreateURL(t *testing.T) {
 }
 
 func ConfigSet(key string, value string) {
-	exec.Command("git", "config", "--global", key, value)
+	exec.Command("git", "config", "--global", key, value).Output()
 }

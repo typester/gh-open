@@ -109,5 +109,7 @@ func ConfigGet(key string) string {
 	if nil != err {
 		return ""
 	}
-	return strings.TrimRight(strings.TrimRight(string(value), "\000"), "\n")
+	return strings.TrimRightFunc(string(value), func(r rune) bool {
+		return string(r) == "\000" || string(r) == "\n"
+	})
 }
