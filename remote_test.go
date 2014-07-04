@@ -137,3 +137,29 @@ func TestMangleURL(t *testing.T) {
 		t.Error("unexpected error:", err)
 	}
 }
+
+func TestCreateURL(t *testing.T) {
+	gheHost := "ghe.exsample.com"
+	gheProtocol := "http"
+
+	ConfigSet("--remove", "gh-open")
+	ConfigSet("gh-open.ghe-host", gheHost)
+	ConfigSet("gh-open.ghe-protocol", gheProtocol)
+
+	expected := "http://ghe.exsample.com/username/repo"
+
+	u, err := CreateURL(gheHost, "username", "repo")
+
+	ConfigSet("--remove", "gh-open")
+
+	if err != nil {
+		t.Error("error should be nil:", err)
+	}
+	if u != expected {
+		t.Error("unexpected url:", u)
+	}
+}
+
+func ConfigSet(key string, value string) {
+	exec.Command("git", "config", "--global", key, value)
+}
