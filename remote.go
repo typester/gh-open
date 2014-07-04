@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"regexp"
+	"strings"
 )
 
 type Remote struct {
@@ -85,8 +86,30 @@ func MangleURL(url string) (string, error) {
 }
 
 func CreateURL(host, user, repo string) (string, error) {
-	if host != "github.com" {
+	gheHost := ConfigGet("gh-open.ghe-host")
+	gheProtocol := ConfigGet("gh-open.ghe-protocol")
+
+	if host != "github.com" && host != gheHost {
 		return "", fmt.Errorf("invalid github host: %s", host)
 	}
-	return fmt.Sprintf("https://%s/%s/%s", host, user, repo), nil
+
+	if host == gheHost {
+		if "" == gheProtocol {
+			gheProtocol = "https"
+		}
+		return fmt.Sprintf("%s://%s/%s/%s", gheProtocol, host, user, repo), nil
+	} else {
+		return fmt.Sprintf("https://%s/%s/%s", host, user, repo), nil
+	}
+}
+
+func ConfigGet(key string) string {
+	cmd := exec.Command("git", "config", "--get", key)
+	value, err := cmd.Output()
+	if nil != err {
+		return ""
+	}
+	return strings.TrimRightFunc(string(value), func(r rune) bool {
+		return string(r) == "\000" || string(r) == "\n"
+	})
 }

@@ -137,3 +137,42 @@ func TestMangleURL(t *testing.T) {
 		t.Error("unexpected error:", err)
 	}
 }
+
+func TestCreateURL(t *testing.T) {
+
+	// GitHub enterprise test
+	gheHost := "ghe.exsample.com"
+	gheProtocol := "http"
+
+	expected := gheProtocol + "://" + gheHost + "/username/repo"
+
+	//gitconfig keys
+	gheHostKey := "gh-open.ghe-host"
+	gheProtocolKey := "gh-open.ghe-protocol"
+	gheHostOrg := ConfigGet(gheHostKey)
+	gheProtocolOrg := ConfigGet(gheProtocolKey)
+
+	//set dummy data
+	ConfigSet(gheHostKey, gheHost)
+	ConfigSet(gheProtocolKey, gheProtocol)
+
+	u, err := CreateURL(gheHost, "username", "repo")
+
+	if err != nil {
+		t.Error("error should be nil:", err)
+	}
+	if u != expected {
+		t.Error("unexpected url:", u)
+	}
+
+	if "" != gheHostOrg {
+		ConfigSet(gheHostKey, gheHostOrg)
+		ConfigSet(gheProtocolKey, gheProtocolOrg)
+	} else {
+		ConfigSet("--remove", "gh-open")
+	}
+}
+
+func ConfigSet(key string, value string) {
+	exec.Command("git", "config", "--global", key, value).Output()
+}
