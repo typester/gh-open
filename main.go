@@ -27,12 +27,12 @@ func main() {
 
 	for _, r := range remotes {
 		url, err := MangleURL(r.Url)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "remote:%s, %s\n", r.Name, err.Error())
-			continue
+		if err == nil {
+			open.Run(url)
+			os.Exit(0)
 		}
-
-		open.Run(url)
-		break
 	}
+
+	fmt.Fprintf(os.Stderr, "Error: No such GitHub remote url.\n")
+	os.Exit(1)
 }
