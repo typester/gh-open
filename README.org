@@ -12,6 +12,14 @@ GitHub remote url open command.
      gh-open ~/path/to/repo
    #+END_SRC
 
+   Github Enterprise is supported:
+   #+BEGIN_SRC sh
+     git config hub.host ghe.example.com
+     git config hub.protocol http
+   #+END_SRC
+
+   Variables are according to [[https://hub.github.com][hub].
+
 ** Requirements
 
    - git command (in PATH)
