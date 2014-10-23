@@ -95,6 +95,27 @@ func CreateURL(host, user, repo string) (string, error) {
 	} else if host == "bitbucket.org" {
 		return fmt.Sprintf("https://%s/%s/%s", host, user, repo), nil
 	} else {
-		return "", fmt.Errorf("invalid github or bitbucket host: %s", host)
+		return CreateURLByHubConfig(host, user, repo)
 	}
+}
+
+func CreateURLByHubConfig(host, user, repo string) (string, error) {
+	hub_host := GetConfig("hub.host", "")
+	protocol := GetConfig("hub.protocol", "https")
+	if hub_host != "" {
+		if protocol != "https" && protocol != "http" {
+			return "", fmt.Errorf("unsupported protocol: %s", protocol)
+		}
+		return fmt.Sprintf("%s://%s/%s/%s", protocol, host, user, repo), nil
+	} else {
+		return "", fmt.Errorf("invalid github (includes enterprise) or bitbucket host: %s", host)
+	}
+}
+
+func GetConfig(name string, default_value string) string {
+	value, err := exec.Command("git", "config", name).Output()
+	if err != nil {
+		return default_value
+	}
+	return string(value[:len(value)-1])
 }
