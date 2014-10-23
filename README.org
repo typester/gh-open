@@ -18,7 +18,7 @@ GitHub remote url open command.
      git config hub.protocol http
    #+END_SRC
 
-   Variables are according to [[https://hub.github.com][hub].
+   Variables are according to [[https://hub.github.com][hub]].
 
 ** Requirements
 
